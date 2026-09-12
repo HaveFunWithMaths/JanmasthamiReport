@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { 
-  Search, Tent, Flower2, Utensils, Gift, Printer, ShieldCheck, 
+import {
+  Search, Tent, Flower2, Utensils, Gift, Printer, ShieldCheck,
   Filter, ChevronRight, CheckCircle2, Info
 } from 'lucide-react';
 
 const iconMap = {
-  "Setup (Generator)": Tent,
+  "Setup": Tent,
   "Deity (Abhishekam, flowers)": Flower2,
   "Prasadam and Bhoga": Utensils,
   "Gifts": Gift,
@@ -14,7 +14,7 @@ const iconMap = {
 };
 
 const colorMap = {
-  "Setup (Generator)": "#f59e0b",
+  "Setup": "#f59e0b",
   "Deity (Abhishekam, flowers)": "#ec4899",
   "Prasadam and Bhoga": "#10b981",
   "Gifts": "#8b5cf6",
@@ -22,12 +22,12 @@ const colorMap = {
   "Others": "#94a3b8"
 };
 
-export default function ExpensesSection({ 
-  expenses, 
-  categories, 
+export default function ExpensesSection({
+  expenses,
+  categories,
   totalExpenses,
   selectedCategory = 'ALL',
-  setSelectedCategory = () => {}
+  setSelectedCategory = () => { }
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('category'); // 'category' is default as requested!
@@ -35,7 +35,7 @@ export default function ExpensesSection({
 
   // Category canonical order
   const categoryOrder = [
-    "Setup (Generator)",
+    "Setup",
     "Deity (Abhishekam, flowers)",
     "Prasadam and Bhoga",
     "Gifts",
@@ -61,7 +61,7 @@ export default function ExpensesSection({
     const filtered = expenses.filter(item => {
       const matchesCategory = selectedCategory === 'ALL' || item.category === selectedCategory;
       const q = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         item.title.toLowerCase().includes(q) ||
         item.devotee.toLowerCase().includes(q) ||
         item.category.toLowerCase().includes(q) ||
@@ -102,8 +102,8 @@ export default function ExpensesSection({
         </div>
 
         {selectedCategory !== 'ALL' && (
-          <button 
-            onClick={() => setSelectedCategory('ALL')} 
+          <button
+            onClick={() => setSelectedCategory('ALL')}
             className="btn btn-glass btn-sm"
           >
             <Filter size={14} />
@@ -121,7 +121,7 @@ export default function ExpensesSection({
           const catColor = colorMap[cat.name] || '#f59e0b';
 
           return (
-            <div 
+            <div
               key={cat.id}
               className={`category-card glass-card ${isSelected ? 'selected' : ''}`}
               onClick={() => setSelectedCategory(isSelected ? 'ALL' : cat.name)}
@@ -129,11 +129,11 @@ export default function ExpensesSection({
             >
               <div className="category-top">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <div style={{ 
-                    padding: '8px', 
-                    borderRadius: '10px', 
-                    background: `${catColor}20`, 
-                    color: catColor 
+                  <div style={{
+                    padding: '8px',
+                    borderRadius: '10px',
+                    background: `${catColor}20`,
+                    color: catColor
                   }}>
                     <Icon size={22} />
                   </div>
@@ -154,8 +154,8 @@ export default function ExpensesSection({
               </div>
 
               <div className="progress-bar-bg">
-                <div 
-                  className="progress-bar-fill" 
+                <div
+                  className="progress-bar-fill"
                   style={{ width: `${percent}%`, backgroundColor: catColor }}
                 />
               </div>
@@ -191,7 +191,7 @@ export default function ExpensesSection({
           <thead>
             <tr>
               <th style={{ width: '45px' }}>#</th>
-              <th 
+              <th
                 style={{ cursor: 'pointer', userSelect: 'none' }}
                 onClick={() => {
                   if (sortBy === 'devotee') setSortAsc(!sortAsc);
@@ -202,7 +202,7 @@ export default function ExpensesSection({
                 Devotee / Submitter {sortBy === 'devotee' ? (sortAsc ? '▲' : '▼') : ''}
               </th>
               <th>Title / Item Description</th>
-              <th 
+              <th
                 style={{ cursor: 'pointer', userSelect: 'none', color: sortBy === 'category' ? 'var(--gold-light)' : undefined }}
                 onClick={() => {
                   if (sortBy === 'category') setSortAsc(!sortAsc);
@@ -217,7 +217,7 @@ export default function ExpensesSection({
                   </span>
                 )}
               </th>
-              <th 
+              <th
                 style={{ textAlign: 'right', cursor: 'pointer', userSelect: 'none' }}
                 onClick={() => {
                   if (sortBy === 'amount') setSortAsc(!sortAsc);
@@ -250,10 +250,10 @@ export default function ExpensesSection({
                       <span style={{ fontWeight: 500 }}>{item.title}</span>
                     </td>
                     <td>
-                      <span className="pill" style={{ 
-                        background: `${catColor}15`, 
-                        color: catColor, 
-                        border: `1px solid ${catColor}40` 
+                      <span className="pill" style={{
+                        background: `${catColor}15`,
+                        color: catColor,
+                        border: `1px solid ${catColor}40`
                       }}>
                         {item.category}
                       </span>

@@ -10,7 +10,7 @@ A high-fidelity, devotional, and transparent web application presenting the comp
 - **Net Surplus Balance**: +₹80,782 (43.2% preserved in temple reserves)
 
 ## 📂 Expense Categories
-1. **Setup (Generator)**: ₹46,155 (43.4%)
+1. **Setup**: ₹46,155 (43.4%)
 2. **Deity (Abhishekam, flowers)**: ₹23,192 (21.8%)
 3. **Prasadam and Bhoga**: ₹17,100 (16.1%)
 4. **Gifts**: ₹11,569 (10.9%)

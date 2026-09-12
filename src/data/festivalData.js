@@ -562,7 +562,7 @@ export const festivalExpenses = [
     "id": "exp-6",
     "devotee": "HG Sudama Sakha Prabhuji",
     "title": "Tent and carpet",
-    "category": "Setup (Generator)",
+    "category": "Setup",
     "amount": 31000.0,
     "comments": "This was paid from trust account"
   },
@@ -602,7 +602,7 @@ export const festivalExpenses = [
     "id": "exp-11",
     "devotee": "Vrajesh Tanay Das",
     "title": "Tirpal for rain protection (Setup)",
-    "category": "Setup (Generator)",
+    "category": "Setup",
     "amount": 430.0,
     "comments": "Setup seva: Rain protection"
   },
@@ -666,7 +666,7 @@ export const festivalExpenses = [
     "id": "exp-19",
     "devotee": "Teja Siva Prabhuji",
     "title": "Barricades",
-    "category": "Setup (Generator)",
+    "category": "Setup",
     "amount": 4625.0,
     "comments": "Total 5625 - 1000. 1000 paid as an advance by HG Sudhama sakha pr"
   },
@@ -674,7 +674,7 @@ export const festivalExpenses = [
     "id": "exp-20",
     "devotee": "Teja Siva Prabhuji",
     "title": "20 chairs for festival, 20*10",
-    "category": "Setup (Generator)",
+    "category": "Setup",
     "amount": 200.0,
     "comments": "Each chair 10 rupees. 10*20"
   },
@@ -682,7 +682,7 @@ export const festivalExpenses = [
     "id": "exp-21",
     "devotee": "HG Sudama Sakha Prabhuji",
     "title": "Generator, flashlights -15, Fans - 2",
-    "category": "Setup (Generator)",
+    "category": "Setup",
     "amount": 7500.0,
     "comments": ""
   },
@@ -690,7 +690,7 @@ export const festivalExpenses = [
     "id": "exp-22",
     "devotee": "HG Sudama Sakha Prabhuji",
     "title": "Barricades transport to and fro",
-    "category": "Setup (Generator)",
+    "category": "Setup",
     "amount": 2400.0,
     "comments": ""
   },
@@ -819,7 +819,7 @@ export const festivalExpenses = [
 export const expenseCategories = [
   {
     id: "setup",
-    name: "Setup (Generator)",
+    name: "Setup",
     description: "Tents, generator, lighting, fans, barricades & seating arrangements",
     color: "#f59e0b",
     icon: "Tent"

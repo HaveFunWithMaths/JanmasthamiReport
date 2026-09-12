@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
-import { 
-  PiggyBank, TrendingUp, IndianRupee, 
+import {
+  PiggyBank, TrendingUp, IndianRupee,
   Receipt, ChevronRight, ArrowRight,
   Tent, Flower2, Utensils, Gift, Printer, ShieldCheck
 } from 'lucide-react';
 
 const categoryMeta = {
-  "Setup (Generator)": {
+  "Setup": {
     color: "#f59e0b",
     icon: Tent,
     desc: "Tent, generator, lighting, fans, barricades & seating"
@@ -38,12 +38,12 @@ const categoryMeta = {
   }
 };
 
-export default function AuditSummary({ 
-  totalInflow, 
-  totalExpenses, 
-  netSurplus, 
+export default function AuditSummary({
+  totalInflow,
+  totalExpenses,
+  netSurplus,
   expenses = [],
-  onNavigateToExpenses = () => {} 
+  onNavigateToExpenses = () => { }
 }) {
   const categoryDetails = useMemo(() => {
     const stats = {};
@@ -86,7 +86,7 @@ export default function AuditSummary({
           </p>
         </div>
 
-        <button 
+        <button
           onClick={() => onNavigateToExpenses('ALL')}
           className="btn btn-gold btn-sm"
           id="audit-to-expenses-btn"
@@ -99,11 +99,11 @@ export default function AuditSummary({
       </div>
 
       {/* Simplified 3 Core Financial Cards: Total Income, Total Expenses, Net Surplus */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', 
-        gap: '1.25rem', 
-        marginBottom: '2.25rem' 
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+        gap: '1.25rem',
+        marginBottom: '2.25rem'
       }}>
         {/* Total Income */}
         <div className="glass-card" style={{ padding: '1.5rem', borderLeft: '4px solid var(--gold-primary)' }}>
@@ -111,15 +111,15 @@ export default function AuditSummary({
             <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Total Income
             </span>
-            <div style={{ 
-              width: '36px', 
-              height: '36px', 
-              borderRadius: 'var(--radius-md)', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              background: 'rgba(245, 158, 11, 0.15)', 
-              color: 'var(--gold-light)' 
+            <div style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: 'var(--radius-md)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(245, 158, 11, 0.15)',
+              color: 'var(--gold-light)'
             }}>
               <IndianRupee size={18} />
             </div>
@@ -138,15 +138,15 @@ export default function AuditSummary({
             <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Total Expenses
             </span>
-            <div style={{ 
-              width: '36px', 
-              height: '36px', 
-              borderRadius: 'var(--radius-md)', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              background: 'rgba(239, 68, 68, 0.15)', 
-              color: '#ef4444' 
+            <div style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: 'var(--radius-md)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(239, 68, 68, 0.15)',
+              color: '#ef4444'
             }}>
               <TrendingUp size={18} />
             </div>
@@ -160,10 +160,10 @@ export default function AuditSummary({
         </div>
 
         {/* Net Surplus - Easily Visible and Prominently Highlighted */}
-        <div 
-          className="glass-card" 
-          style={{ 
-            padding: '1.5rem', 
+        <div
+          className="glass-card"
+          style={{
+            padding: '1.5rem',
             border: '2px solid rgba(16, 185, 129, 0.55)',
             background: 'linear-gradient(145deg, rgba(22, 30, 52, 0.9), rgba(16, 185, 129, 0.15))',
             boxShadow: '0 8px 30px rgba(16, 185, 129, 0.22)'
@@ -179,15 +179,15 @@ export default function AuditSummary({
                 SURPLUS
               </span>
             </div>
-            <div style={{ 
-              width: '36px', 
-              height: '36px', 
-              borderRadius: 'var(--radius-md)', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              background: 'rgba(16, 185, 129, 0.25)', 
-              color: 'var(--emerald-light)' 
+            <div style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: 'var(--radius-md)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(16, 185, 129, 0.25)',
+              color: 'var(--emerald-light)'
             }}>
               <PiggyBank size={18} />
             </div>
@@ -221,7 +221,7 @@ export default function AuditSummary({
           {categoryDetails.map(cat => {
             const Icon = cat.icon;
             return (
-              <div 
+              <div
                 key={cat.name}
                 className="category-card glass-card"
                 onClick={() => onNavigateToExpenses(cat.name)}
@@ -231,11 +231,11 @@ export default function AuditSummary({
               >
                 <div className="category-top">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <div style={{ 
-                      padding: '8px', 
-                      borderRadius: '10px', 
-                      background: `${cat.color}20`, 
-                      color: cat.color 
+                    <div style={{
+                      padding: '8px',
+                      borderRadius: '10px',
+                      background: `${cat.color}20`,
+                      color: cat.color
                     }}>
                       <Icon size={22} />
                     </div>
@@ -256,18 +256,18 @@ export default function AuditSummary({
                 </div>
 
                 <div className="progress-bar-bg">
-                  <div 
-                    className="progress-bar-fill" 
+                  <div
+                    className="progress-bar-fill"
                     style={{ width: `${cat.pct}%`, backgroundColor: cat.color }}
                   />
                 </div>
 
-                <div style={{ 
-                  marginTop: '0.85rem', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'flex-end', 
-                  fontSize: '0.78rem', 
+                <div style={{
+                  marginTop: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                  fontSize: '0.78rem',
                   color: cat.color,
                   fontWeight: 600,
                   gap: '0.25rem'
@@ -282,14 +282,14 @@ export default function AuditSummary({
       </div>
 
       {/* Bottom Redirect Banner */}
-      <div 
-        className="glass-card" 
-        style={{ 
-          padding: '1.4rem 1.8rem', 
+      <div
+        className="glass-card"
+        style={{
+          padding: '1.4rem 1.8rem',
           background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(14, 165, 233, 0.1))',
           border: '1px solid rgba(245, 158, 11, 0.3)',
-          display: 'flex', 
-          alignItems: 'center', 
+          display: 'flex',
+          alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '1rem',

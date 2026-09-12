@@ -40,9 +40,9 @@
 
 | ID | Item Description | Category | Amount (₹) | Notes / Remarks |
 |---|---|---|:---:|---|
-| exp-6 | Tent and carpet | Setup (Generator) | ₹31,000 | This was paid from trust account |
-| exp-21 | Generator, flashlights -15, Fans - 2 | Setup (Generator) | ₹7,500 | — |
-| exp-22 | Barricades transport to and fro | Setup (Generator) | ₹2,400 | — |
+| exp-6 | Tent and carpet | Setup | ₹31,000 | This was paid from trust account |
+| exp-21 | Generator, flashlights -15, Fans - 2 | Setup | ₹7,500 | — |
+| exp-22 | Barricades transport to and fro | Setup | ₹2,400 | — |
 | exp-23 | Flowers purchasing | Deity (Abhishekam, flowers) | ₹2,775 | — |
 
 ### 2. Teja Siva Prabhuji
@@ -54,8 +54,8 @@
 |---|---|---|:---:|---|
 | exp-9 | Acrylic badges for volunteers | Others | ₹544 | — |
 | exp-17 | Flowers decorations | Deity (Abhishekam, flowers) | ₹9,000 | Flowers decoration for altar and entrance arch |
-| exp-19 | Barricades | Setup (Generator) | ₹4,625 | Total 5625 - 1000. 1000 paid as an advance by HG Sudhama sakha pr |
-| exp-20 | 20 chairs for festival, 20*10 | Setup (Generator) | ₹200 | Each chair 10 rupees. 10*20 |
+| exp-19 | Barricades | Setup | ₹4,625 | Total 5625 - 1000. 1000 paid as an advance by HG Sudhama sakha pr |
+| exp-20 | 20 chairs for festival, 20*10 | Setup | ₹200 | Each chair 10 rupees. 10*20 |
 
 ### 3. Sai Dheeraj Prabhuji
 
@@ -153,7 +153,7 @@
 | ID | Item Description | Category | Amount (₹) | Notes / Remarks |
 |---|---|---|:---:|---|
 | exp-10 | Security guard for the festival | Others | ₹1,000 | Festival security guard |
-| exp-11 | Tirpal for rain protection (Setup) | Setup (Generator) | ₹430 | Setup seva: Rain protection |
+| exp-11 | Tirpal for rain protection (Setup) | Setup | ₹430 | Setup seva: Rain protection |
 
 ### 12. Manisha Mataji
 
