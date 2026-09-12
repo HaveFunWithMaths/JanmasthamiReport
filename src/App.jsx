@@ -3,9 +3,7 @@ import Header from './components/Header';
 import KPICards from './components/KPICards';
 import TabNavigation from './components/TabNavigation';
 import ExpensesSection from './components/ExpensesSection';
-import AbhishekamSection from './components/AbhishekamSection';
-import DonationsSection from './components/DonationsSection';
-import DevoteeLedger from './components/DevoteeLedger';
+import DonationsAndAbhishekam from './components/DonationsAndAbhishekam';
 import AuditSummary from './components/AuditSummary';
 import Footer from './components/Footer';
 
@@ -13,12 +11,11 @@ import {
   abhishekamSevas, 
   generalDonations, 
   festivalExpenses, 
-  expenseCategories,
-  festivalOverview 
+  expenseCategories 
 } from './data/festivalData';
 
 export default function App() {
-  // Audit Summary is the first and default tab as requested!
+  // Audit Summary is the first and default tab
   const [activeTab, setActiveTab] = useState('summary');
   const [selectedExpenseCategory, setSelectedExpenseCategory] = useState('ALL');
 
@@ -43,17 +40,10 @@ export default function App() {
     return totalInflow - totalExpenses;
   }, [totalInflow, totalExpenses]);
 
-  // Unique devotees count for ledger
-  const uniqueDevoteesCount = useMemo(() => {
-    const devs = new Set(festivalExpenses.map(e => e.devotee));
-    return devs.size;
-  }, []);
-
-  // Intuitive redirect handler from Audit Summary to Expenses tab
+  // Handler from Audit Summary to Expenses tab
   const handleNavigateToExpenses = (category = 'ALL') => {
     setSelectedExpenseCategory(category);
     setActiveTab('expenses');
-    // Smooth scroll down to the navigation bar / expenses content
     setTimeout(() => {
       const el = document.getElementById('expenses-section') || document.querySelector('.tabs-nav');
       if (el) {
@@ -74,16 +64,14 @@ export default function App() {
           Official Seva, Donation & Expenditure Financial Audit Report
         </h2>
         <div style={{ display: 'flex', justifyContent: 'space-around', fontSize: '10pt', borderTop: '1px solid #cbd5e1', paddingTop: '6pt' }}>
-          <span><strong>Total Receipts:</strong> ₹{totalInflow.toLocaleString('en-IN')}</span>
-          <span><strong>Total Abhishekam:</strong> ₹{totalAbhishekam.toLocaleString('en-IN')}</span>
-          <span><strong>Total Donations:</strong> ₹{totalDonations.toLocaleString('en-IN')}</span>
+          <span><strong>Total Inflow:</strong> ₹{totalInflow.toLocaleString('en-IN')}</span>
           <span><strong>Total Expenses:</strong> ₹{totalExpenses.toLocaleString('en-IN')}</span>
           <span><strong>Net Surplus:</strong> +₹{netSurplus.toLocaleString('en-IN')}</span>
         </div>
       </div>
 
       <main className="container" style={{ paddingBottom: '3rem' }}>
-        {/* Top KPI Cards & Surplus Meter */}
+        {/* Top KPI Cards */}
         <KPICards 
           totalAbhishekam={totalAbhishekam}
           totalDonations={totalDonations}
@@ -92,15 +80,13 @@ export default function App() {
           netSurplus={netSurplus}
         />
 
-        {/* Section Navigation Tabs */}
+        {/* Section Navigation Tabs (3 simplified tabs) */}
         <TabNavigation 
           activeTab={activeTab} 
           setActiveTab={setActiveTab}
           counts={{
             expenses: festivalExpenses.length,
-            abhishekam: abhishekamSevas.length,
-            donations: generalDonations.length,
-            devotees: uniqueDevoteesCount
+            inflow: abhishekamSevas.length + generalDonations.length,
           }}
         />
 
@@ -111,8 +97,6 @@ export default function App() {
               totalInflow={totalInflow}
               totalExpenses={totalExpenses}
               netSurplus={netSurplus}
-              totalAbhishekam={totalAbhishekam}
-              totalDonations={totalDonations}
               expenses={festivalExpenses}
               onNavigateToExpenses={handleNavigateToExpenses}
             />
@@ -128,24 +112,13 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'abhishekam' && (
-            <AbhishekamSection 
+          {activeTab === 'inflow' && (
+            <DonationsAndAbhishekam 
               abhishekamData={abhishekamSevas}
-              totalAbhishekam={totalAbhishekam}
-            />
-          )}
-
-          {activeTab === 'donations' && (
-            <DonationsSection 
               donationsData={generalDonations}
+              totalAbhishekam={totalAbhishekam}
               totalDonations={totalDonations}
-            />
-          )}
-
-          {activeTab === 'devotees' && (
-            <DevoteeLedger 
-              expenses={festivalExpenses}
-              totalExpenses={totalExpenses}
+              totalInflow={totalInflow}
             />
           )}
         </div>

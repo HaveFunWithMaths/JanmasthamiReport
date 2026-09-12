@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { 
-  CheckCircle2, AlertCircle, PieChart, ShieldCheck, Heart, 
-  Sparkles, Award, Utensils, Tent, Flower2, Gift, Printer, 
-  ArrowRight, ArrowUpRight, Receipt, ChevronRight
+  PiggyBank, TrendingUp, IndianRupee, 
+  Receipt, ChevronRight, ArrowRight,
+  Tent, Flower2, Utensils, Gift, Printer, ShieldCheck
 } from 'lucide-react';
 
 const categoryMeta = {
@@ -42,15 +42,9 @@ export default function AuditSummary({
   totalInflow, 
   totalExpenses, 
   netSurplus, 
-  totalAbhishekam, 
-  totalDonations,
   expenses = [],
   onNavigateToExpenses = () => {} 
 }) {
-  const surplusPct = ((netSurplus / totalInflow) * 100).toFixed(1);
-  const abhishekamInflowPct = ((totalAbhishekam / totalInflow) * 100).toFixed(1);
-  const donationsInflowPct = ((totalDonations / totalInflow) * 100).toFixed(1);
-
   const categoryDetails = useMemo(() => {
     const stats = {};
     expenses.forEach(item => {
@@ -85,14 +79,13 @@ export default function AuditSummary({
       <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h3 className="font-devotional" style={{ fontSize: '1.4rem', color: 'var(--gold-light)' }}>
-            Executive Financial Audit & Seva Insights
+            Executive Financial Summary
           </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            Complete balance sheet overview, percentage distributions, and direct navigation to detailed ledgers.
+            Core financial overview and categorical expenditure analysis.
           </p>
         </div>
 
-        {/* Intuitive Quick Navigation Button to Expenses */}
         <button 
           onClick={() => onNavigateToExpenses('ALL')}
           className="btn btn-gold btn-sm"
@@ -105,82 +98,111 @@ export default function AuditSummary({
         </button>
       </div>
 
-      <div className="kpi-grid" style={{ marginBottom: '2rem' }}>
-        {/* Core Financial Ratios */}
-        <div className="glass-card" style={{ padding: '1.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: 'var(--gold-light)' }}>
-            <PieChart size={20} />
-            <h4 style={{ fontSize: '1.1rem', fontWeight: 700 }}>Inflow Composition</h4>
+      {/* Simplified 3 Core Financial Cards: Total Income, Total Expenses, Net Surplus */}
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', 
+        gap: '1.25rem', 
+        marginBottom: '2.25rem' 
+      }}>
+        {/* Total Income */}
+        <div className="glass-card" style={{ padding: '1.5rem', borderLeft: '4px solid var(--gold-primary)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+            <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              Total Income
+            </span>
+            <div style={{ 
+              width: '36px', 
+              height: '36px', 
+              borderRadius: 'var(--radius-md)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              background: 'rgba(245, 158, 11, 0.15)', 
+              color: 'var(--gold-light)' 
+            }}>
+              <IndianRupee size={18} />
+            </div>
           </div>
-
-          <div style={{ marginBottom: '1.25rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '0.35rem' }}>
-              <span>Abhishekam Sevas (66 Donors)</span>
-              <strong className="font-num" style={{ color: '#ec4899' }}>{abhishekamInflowPct}% (₹{totalAbhishekam.toLocaleString('en-IN')})</strong>
-            </div>
-            <div className="progress-bar-bg" style={{ marginTop: 0 }}>
-              <div className="progress-bar-fill" style={{ width: `${abhishekamInflowPct}%`, backgroundColor: '#ec4899' }} />
-            </div>
+          <div className="font-num" style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--gold-light)', marginBottom: '0.35rem' }}>
+            ₹{totalInflow.toLocaleString('en-IN')}
           </div>
-
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '0.35rem' }}>
-              <span>General Donations & Hundi (21 Donors)</span>
-              <strong className="font-num" style={{ color: '#10b981' }}>{donationsInflowPct}% (₹{totalDonations.toLocaleString('en-IN')})</strong>
-            </div>
-            <div className="progress-bar-bg" style={{ marginTop: 0 }}>
-              <div className="progress-bar-fill" style={{ width: `${donationsInflowPct}%`, backgroundColor: '#10b981' }} />
-            </div>
+          <div style={{ fontSize: '0.825rem', color: 'var(--text-subtle)' }}>
+            87 Contributions (Abhishekam & Donations)
           </div>
         </div>
 
-        {/* Operating Balance */}
-        <div className="glass-card" style={{ padding: '1.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: 'var(--emerald-light)' }}>
-            <CheckCircle2 size={20} />
-            <h4 style={{ fontSize: '1.1rem', fontWeight: 700 }}>Budgetary Health</h4>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.45rem 0', borderBottom: '1px solid var(--border-glass)' }}>
-            <span style={{ color: 'var(--text-muted)' }}>Gross Receipts Collected:</span>
-            <strong className="font-num">₹{totalInflow.toLocaleString('en-IN')}</strong>
-          </div>
-
-          {/* Interactive Line Item redirecting to Expenses */}
-          <div 
-            style={{ 
+        {/* Total Expenses */}
+        <div className="glass-card" style={{ padding: '1.5rem', borderLeft: '4px solid #ef4444' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+            <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              Total Expenses
+            </span>
+            <div style={{ 
+              width: '36px', 
+              height: '36px', 
+              borderRadius: 'var(--radius-md)', 
               display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center',
-              padding: '0.45rem 0', 
-              borderBottom: '1px solid var(--border-glass)',
-              cursor: 'pointer' 
-            }}
-            onClick={() => onNavigateToExpenses('ALL')}
-            title="Click to view full expenses table"
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <span style={{ color: 'var(--text-muted)' }}>Festival Expenditures:</span>
-              <span className="pill pill-gold" style={{ fontSize: '0.7rem', padding: '0.1rem 0.45rem' }}>
-                View Table <ArrowUpRight size={11} />
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              background: 'rgba(239, 68, 68, 0.15)', 
+              color: '#ef4444' 
+            }}>
+              <TrendingUp size={18} />
+            </div>
+          </div>
+          <div className="font-num" style={{ fontSize: '2rem', fontWeight: 800, color: '#ef4444', marginBottom: '0.35rem' }}>
+            ₹{totalExpenses.toLocaleString('en-IN')}
+          </div>
+          <div style={{ fontSize: '0.825rem', color: 'var(--text-subtle)' }}>
+            37 Expense Line Items across 6 Categories
+          </div>
+        </div>
+
+        {/* Net Surplus - Easily Visible and Prominently Highlighted */}
+        <div 
+          className="glass-card" 
+          style={{ 
+            padding: '1.5rem', 
+            border: '2px solid rgba(16, 185, 129, 0.55)',
+            background: 'linear-gradient(145deg, rgba(22, 30, 52, 0.9), rgba(16, 185, 129, 0.15))',
+            boxShadow: '0 8px 30px rgba(16, 185, 129, 0.22)'
+          }}
+          id="summary-net-surplus-card"
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--emerald-light)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                Net Surplus
+              </span>
+              <span className="pill pill-green font-num" style={{ fontSize: '0.7rem', padding: '0.1rem 0.45rem', fontWeight: 700 }}>
+                SURPLUS
               </span>
             </div>
-            <strong className="font-num" style={{ color: '#ef4444' }}>- ₹{totalExpenses.toLocaleString('en-IN')}</strong>
+            <div style={{ 
+              width: '36px', 
+              height: '36px', 
+              borderRadius: 'var(--radius-md)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              background: 'rgba(16, 185, 129, 0.25)', 
+              color: 'var(--emerald-light)' 
+            }}>
+              <PiggyBank size={18} />
+            </div>
           </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.55rem 0', marginTop: '0.2rem' }}>
-            <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>Net Surplus Balance:</span>
-            <strong className="font-num" style={{ color: 'var(--emerald-light)', fontSize: '1.25rem' }}>+ ₹{netSurplus.toLocaleString('en-IN')}</strong>
+          <div className="font-num" style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--emerald-light)', marginBottom: '0.35rem' }}>
+            +₹{netSurplus.toLocaleString('en-IN')}
           </div>
-
-          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '0.55rem 0.8rem', borderRadius: 'var(--radius-sm)', marginTop: '0.4rem', fontSize: '0.8rem', color: 'var(--emerald-light)' }}>
-            ✓ <strong>{surplusPct}% of all collections</strong> preserved safely in temple reserve.
+          <div style={{ fontSize: '0.825rem', color: 'var(--emerald-light)', fontWeight: 600 }}>
+            ✓ Verified Positive Reserve
           </div>
         </div>
       </div>
 
-      {/* Intuitive Category Redirect Grid: Click any category to filter Expenses */}
-      <div style={{ marginBottom: '2.5rem' }}>
+      {/* Category Breakdown: Click any category to filter Expenses */}
+      <div style={{ marginBottom: '2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
           <div>
             <h4 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-main)' }}>
@@ -259,56 +281,7 @@ export default function AuditSummary({
         </div>
       </div>
 
-      {/* Audit Checklist & Special Notes */}
-      <div className="glass-card" style={{ padding: '1.5rem', marginBottom: '2rem' }}>
-        <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--gold-light)' }}>
-          Audit Highlights & Special Confirmations
-        </h4>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
-            <ShieldCheck size={20} color="var(--emerald-light)" style={{ flexShrink: 0, marginTop: '2px' }} />
-            <div>
-              <strong style={{ display: 'block', fontSize: '0.9rem', marginBottom: '0.2rem' }}>Festival Security & Safety</strong>
-              <p style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-                Dedicated festival security guard services (₹1,000) categorized under <strong>Others</strong> ensured safe queue management and peaceful darshan.
-              </p>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
-            <Flower2 size={20} color="#ec4899" style={{ flexShrink: 0, marginTop: '2px' }} />
-            <div>
-              <strong style={{ display: 'block', fontSize: '0.9rem', marginBottom: '0.2rem' }}>Sacred Abhishekam Ingredients</strong>
-              <p style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-                4 Litres of sacred milk (Mukesh Prabhuji), brass conch, tender coconuts, honey, and fresh fruits successfully offered to the Lord.
-              </p>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
-            <Utensils size={20} color="#10b981" style={{ flexShrink: 0, marginTop: '2px' }} />
-            <div>
-              <strong style={{ display: 'block', fontSize: '0.9rem', marginBottom: '0.2rem' }}>Prasadam & Eco-Friendly Dining</strong>
-              <p style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-                Over 360 devotees served sumptuous dinner prasadam with biodegradable plates, spoons, and donnas.
-              </p>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
-            <Sparkles size={20} color="var(--gold-light)" style={{ flexShrink: 0, marginTop: '2px' }} />
-            <div>
-              <strong style={{ display: 'block', fontSize: '0.9rem', marginBottom: '0.2rem' }}>Zero Deficit Operation</strong>
-              <p style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-                Every single line item was verified, with 100% concordance between original receipts, devotee submissions, and trust accounts.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Hero Redirect Banner */}
+      {/* Bottom Redirect Banner */}
       <div 
         className="glass-card" 
         style={{ 
