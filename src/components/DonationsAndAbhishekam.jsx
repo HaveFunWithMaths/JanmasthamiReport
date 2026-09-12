@@ -98,6 +98,30 @@ export default function DonationsAndAbhishekam({
       if (sortBy === 'name_asc') {
         return a.name.localeCompare(b.name);
       }
+      if (sortBy === 'name_desc') {
+        return b.name.localeCompare(a.name);
+      }
+      if (sortBy === 'type_asc') {
+        const c = a.type.localeCompare(b.type);
+        return c !== 0 ? c : b.amount - a.amount;
+      }
+      if (sortBy === 'type_desc') {
+        const c = b.type.localeCompare(a.type);
+        return c !== 0 ? c : b.amount - a.amount;
+      }
+      if (sortBy === 'category_asc') {
+        const c = a.category.localeCompare(b.category);
+        return c !== 0 ? c : b.amount - a.amount;
+      }
+      if (sortBy === 'category_desc') {
+        const c = b.category.localeCompare(a.category);
+        return c !== 0 ? c : b.amount - a.amount;
+      }
+      if (sortBy === 'id_asc') {
+        const idA = parseInt(a.id.replace(/\D/g, ''), 10) || 0;
+        const idB = parseInt(b.id.replace(/\D/g, ''), 10) || 0;
+        return idA - idB;
+      }
       return b.amount - a.amount;
     });
   }, [combinedList, viewFilter, selectedSeva, searchQuery, sortBy]);
@@ -106,12 +130,18 @@ export default function DonationsAndAbhishekam({
     return filteredList.reduce((acc, curr) => acc + curr.amount, 0);
   }, [filteredList]);
 
-  const toggleAmountSort = () => {
-    setSortBy(prev => prev === 'amount_desc' ? 'amount_asc' : 'amount_desc');
-  };
-
-  const toggleNameSort = () => {
-    setSortBy(prev => prev === 'name_asc' ? 'amount_desc' : 'name_asc');
+  const handleHeaderSort = (field) => {
+    if (field === 'amount') {
+      setSortBy(prev => prev === 'amount_desc' ? 'amount_asc' : 'amount_desc');
+    } else if (field === 'name') {
+      setSortBy(prev => prev === 'name_asc' ? 'name_desc' : 'name_asc');
+    } else if (field === 'type') {
+      setSortBy(prev => prev === 'type_asc' ? 'type_desc' : 'type_asc');
+    } else if (field === 'category') {
+      setSortBy(prev => prev === 'category_asc' ? 'category_desc' : 'category_asc');
+    } else if (field === 'id') {
+      setSortBy(prev => prev === 'id_asc' ? 'amount_desc' : 'id_asc');
+    }
   };
 
   return (
@@ -257,20 +287,24 @@ export default function DonationsAndAbhishekam({
         </div>
 
         {/* Sort Selector */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div className="table-sort-control">
           <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
             Sort:
           </span>
           <select 
-            className="search-input" 
-            style={{ padding: '0.4rem 0.75rem', fontSize: '0.82rem', width: 'auto', cursor: 'pointer' }}
+            className="table-sort-select" 
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             id="inflow-sort-select"
+            aria-label="Sort inflow contributions table"
           >
             <option value="amount_desc">Amount (Highest First) ▼</option>
             <option value="amount_asc">Amount (Lowest First) ▲</option>
-            <option value="name_asc">Devotee Name (A-Z)</option>
+            <option value="name_asc">Devotee Name (A to Z)</option>
+            <option value="name_desc">Devotee Name (Z to A)</option>
+            <option value="type_asc">Offering Type (Abhishekam / Donation)</option>
+            <option value="category_asc">Seva / Offering Name (A to Z)</option>
+            <option value="id_asc">Default Order (# 1 to 87)</option>
           </select>
         </div>
 
@@ -284,29 +318,88 @@ export default function DonationsAndAbhishekam({
         <table className="data-table" id="inflow-table">
           <thead>
             <tr>
-              <th style={{ width: '50px' }}>#</th>
               <th 
-                style={{ cursor: 'pointer', userSelect: 'none' }} 
-                onClick={toggleNameSort}
-                title="Click to sort by Name"
+                style={{ width: '55px' }}
+                className="sortable-th"
+                onClick={() => handleHeaderSort('id')}
+                title="Click to sort by serial number"
+                role="columnheader"
+                aria-sort={sortBy === 'id_asc' ? 'ascending' : 'none'}
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleHeaderSort('id'); } }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                  <span>Devotee / Donor Name</span>
-                  {sortBy === 'name_asc' && <ArrowUp size={14} color="var(--gold-light)" />}
+                <div className="sort-th-content">
+                  <span>#</span>
+                  {sortBy === 'id_asc' ? (
+                    <ArrowUp size={13} className="sort-icon-active" />
+                  ) : (
+                    <ArrowUpDown size={13} className="sort-icon-idle" />
+                  )}
                 </div>
               </th>
-              <th>Type</th>
-              <th>Seva / Offering Details</th>
               <th 
-                style={{ textAlign: 'right', cursor: 'pointer', userSelect: 'none' }}
-                onClick={toggleAmountSort}
-                title="Click to toggle Amount sort"
+                className="sortable-th"
+                onClick={() => handleHeaderSort('name')}
+                title="Click to sort by Devotee Name"
+                role="columnheader"
+                aria-sort={sortBy === 'name_asc' ? 'ascending' : sortBy === 'name_desc' ? 'descending' : 'none'}
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleHeaderSort('name'); } }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.35rem' }}>
+                <div className="sort-th-content">
+                  <span>Devotee / Donor Name</span>
+                  {sortBy === 'name_asc' && <ArrowUp size={14} className="sort-icon-active" />}
+                  {sortBy === 'name_desc' && <ArrowDown size={14} className="sort-icon-active" />}
+                  {sortBy !== 'name_asc' && sortBy !== 'name_desc' && <ArrowUpDown size={14} className="sort-icon-idle" />}
+                </div>
+              </th>
+              <th
+                className="sortable-th"
+                onClick={() => handleHeaderSort('type')}
+                title="Click to sort by Offering Type"
+                role="columnheader"
+                aria-sort={sortBy === 'type_asc' ? 'ascending' : sortBy === 'type_desc' ? 'descending' : 'none'}
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleHeaderSort('type'); } }}
+              >
+                <div className="sort-th-content">
+                  <span>Type</span>
+                  {sortBy === 'type_asc' && <ArrowUp size={14} className="sort-icon-active" />}
+                  {sortBy === 'type_desc' && <ArrowDown size={14} className="sort-icon-active" />}
+                  {sortBy !== 'type_asc' && sortBy !== 'type_desc' && <ArrowUpDown size={14} className="sort-icon-idle" />}
+                </div>
+              </th>
+              <th
+                className="sortable-th"
+                onClick={() => handleHeaderSort('category')}
+                title="Click to sort by Seva Offering Details"
+                role="columnheader"
+                aria-sort={sortBy === 'category_asc' ? 'ascending' : sortBy === 'category_desc' ? 'descending' : 'none'}
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleHeaderSort('category'); } }}
+              >
+                <div className="sort-th-content">
+                  <span>Seva / Offering Details</span>
+                  {sortBy === 'category_asc' && <ArrowUp size={14} className="sort-icon-active" />}
+                  {sortBy === 'category_desc' && <ArrowDown size={14} className="sort-icon-active" />}
+                  {sortBy !== 'category_asc' && sortBy !== 'category_desc' && <ArrowUpDown size={14} className="sort-icon-idle" />}
+                </div>
+              </th>
+              <th 
+                style={{ textAlign: 'right' }}
+                className="sortable-th"
+                onClick={() => handleHeaderSort('amount')}
+                title="Click to sort by Amount"
+                role="columnheader"
+                aria-sort={sortBy === 'amount_asc' ? 'ascending' : sortBy === 'amount_desc' ? 'descending' : 'none'}
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleHeaderSort('amount'); } }}
+              >
+                <div className="sort-th-content right">
                   <span>Amount (₹)</span>
-                  {sortBy === 'amount_desc' && <ArrowDown size={14} color="var(--gold-light)" />}
-                  {sortBy === 'amount_asc' && <ArrowUp size={14} color="var(--gold-light)" />}
-                  {sortBy !== 'amount_desc' && sortBy !== 'amount_asc' && <ArrowUpDown size={14} color="var(--text-subtle)" />}
+                  {sortBy === 'amount_desc' && <ArrowDown size={14} className="sort-icon-active" />}
+                  {sortBy === 'amount_asc' && <ArrowUp size={14} className="sort-icon-active" />}
+                  {sortBy !== 'amount_desc' && sortBy !== 'amount_asc' && <ArrowUpDown size={14} className="sort-icon-idle" />}
                 </div>
               </th>
               <th style={{ textAlign: 'center' }}>Status</th>

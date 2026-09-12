@@ -11,12 +11,12 @@ const categoryMeta = {
     icon: Tent,
     desc: "Tent, generator, lighting, fans, barricades & seating"
   },
-  "Deity (Abhishekam, flowers)": {
+  "Diety": {
     color: "#ec4899",
     icon: Flower2,
     desc: "Altar & arch flowers, conch, brass tray, dresses, milk & fruits"
   },
-  "Prasadam and Bhoga": {
+  "Prasadam & Bhoga": {
     color: "#10b981",
     icon: Utensils,
     desc: "Dinner feast, 56 bhoga, eco plates, spoons, donnas & transport"

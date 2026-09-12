@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Flame, Sparkles, Filter } from 'lucide-react';
+import { Search, Flame, Sparkles, Filter, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 
 export default function AbhishekamSection({ abhishekamData, totalAbhishekam }) {
   const [selectedSeva, setSelectedSeva] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('amount_desc');
 
   // Seva groups summary
   const sevaStats = useMemo(() => {
@@ -20,13 +21,21 @@ export default function AbhishekamSection({ abhishekamData, totalAbhishekam }) {
   const sevaTypes = Object.keys(sevaStats);
 
   const filteredData = useMemo(() => {
-    return abhishekamData.filter(item => {
+    const list = abhishekamData.filter(item => {
       const matchesSeva = selectedSeva === 'ALL' || item.seva === selectedSeva;
       const q = searchQuery.toLowerCase();
       const matchesSearch = item.name.toLowerCase().includes(q) || item.seva.toLowerCase().includes(q);
       return matchesSeva && matchesSearch;
     });
-  }, [abhishekamData, selectedSeva, searchQuery]);
+
+    return list.sort((a, b) => {
+      if (sortBy === 'amount_desc') return b.amount - a.amount || a.name.localeCompare(b.name);
+      if (sortBy === 'amount_asc') return a.amount - b.amount || a.name.localeCompare(b.name);
+      if (sortBy === 'name_asc') return a.name.localeCompare(b.name);
+      if (sortBy === 'name_desc') return b.name.localeCompare(a.name);
+      return b.amount - a.amount;
+    });
+  }, [abhishekamData, selectedSeva, searchQuery, sortBy]);
 
   const filteredTotal = filteredData.reduce((acc, curr) => acc + curr.amount, 0);
 
@@ -84,6 +93,25 @@ export default function AbhishekamSection({ abhishekamData, totalAbhishekam }) {
           />
         </div>
 
+        {/* Sort Selector */}
+        <div className="table-sort-control">
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+            Sort:
+          </span>
+          <select 
+            className="table-sort-select" 
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            id="abhishekam-sort-select"
+            aria-label="Sort abhishekam table"
+          >
+            <option value="amount_desc">Amount (Highest First) ▼</option>
+            <option value="amount_asc">Amount (Lowest First) ▲</option>
+            <option value="name_asc">Devotee Name (A to Z)</option>
+            <option value="name_desc">Devotee Name (Z to A)</option>
+          </select>
+        </div>
+
         <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
           Showing <strong>{filteredData.length}</strong> devotees • Subtotal: <strong className="font-num" style={{ color: 'var(--gold-light)' }}>₹{filteredTotal.toLocaleString('en-IN')}</strong>
         </div>
@@ -95,9 +123,32 @@ export default function AbhishekamSection({ abhishekamData, totalAbhishekam }) {
           <thead>
             <tr>
               <th style={{ width: '50px' }}>#</th>
-              <th>Devotee Name</th>
+              <th 
+                className="sortable-th"
+                onClick={() => setSortBy(prev => prev === 'name_asc' ? 'name_desc' : 'name_asc')}
+                title="Click to sort by Devotee Name"
+              >
+                <div className="sort-th-content">
+                  <span>Devotee Name</span>
+                  {sortBy === 'name_asc' && <ArrowUp size={14} className="sort-icon-active" />}
+                  {sortBy === 'name_desc' && <ArrowDown size={14} className="sort-icon-active" />}
+                  {sortBy !== 'name_asc' && sortBy !== 'name_desc' && <ArrowUpDown size={14} className="sort-icon-idle" />}
+                </div>
+              </th>
               <th>Seva Category</th>
-              <th style={{ textAlign: 'right' }}>Amount (₹)</th>
+              <th 
+                style={{ textAlign: 'right' }}
+                className="sortable-th"
+                onClick={() => setSortBy(prev => prev === 'amount_desc' ? 'amount_asc' : 'amount_desc')}
+                title="Click to sort by Amount"
+              >
+                <div className="sort-th-content right">
+                  <span>Amount (₹)</span>
+                  {sortBy === 'amount_desc' && <ArrowDown size={14} className="sort-icon-active" />}
+                  {sortBy === 'amount_asc' && <ArrowUp size={14} className="sort-icon-active" />}
+                  {sortBy !== 'amount_desc' && sortBy !== 'amount_asc' && <ArrowUpDown size={14} className="sort-icon-idle" />}
+                </div>
+              </th>
               <th style={{ textAlign: 'center' }}>Status</th>
             </tr>
           </thead>

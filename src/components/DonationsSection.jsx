@@ -1,15 +1,24 @@
 import React, { useState, useMemo } from 'react';
-import { Search, HeartHandshake, Award, Coins } from 'lucide-react';
+import { Search, HeartHandshake, Award, Coins, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 
 export default function DonationsSection({ donationsData, totalDonations }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('amount_desc');
 
   const filteredData = useMemo(() => {
-    return donationsData.filter(item => {
+    const list = donationsData.filter(item => {
       const q = searchQuery.toLowerCase();
       return item.name.toLowerCase().includes(q);
     });
-  }, [donationsData, searchQuery]);
+
+    return list.sort((a, b) => {
+      if (sortBy === 'amount_desc') return b.amount - a.amount || a.name.localeCompare(b.name);
+      if (sortBy === 'amount_asc') return a.amount - b.amount || a.name.localeCompare(b.name);
+      if (sortBy === 'name_asc') return a.name.localeCompare(b.name);
+      if (sortBy === 'name_desc') return b.name.localeCompare(a.name);
+      return b.amount - a.amount;
+    });
+  }, [donationsData, searchQuery, sortBy]);
 
   const filteredTotal = filteredData.reduce((acc, curr) => acc + curr.amount, 0);
 
@@ -80,6 +89,25 @@ export default function DonationsSection({ donationsData, totalDonations }) {
           />
         </div>
 
+        {/* Sort Selector */}
+        <div className="table-sort-control">
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+            Sort:
+          </span>
+          <select 
+            className="table-sort-select" 
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            id="donations-sort-select"
+            aria-label="Sort donations table"
+          >
+            <option value="amount_desc">Amount (Highest First) ▼</option>
+            <option value="amount_asc">Amount (Lowest First) ▲</option>
+            <option value="name_asc">Donor Name (A to Z)</option>
+            <option value="name_desc">Donor Name (Z to A)</option>
+          </select>
+        </div>
+
         <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
           Showing <strong>{filteredData.length}</strong> records • Subtotal: <strong className="font-num" style={{ color: 'var(--gold-light)' }}>₹{filteredTotal.toLocaleString('en-IN')}</strong>
         </div>
@@ -91,8 +119,31 @@ export default function DonationsSection({ donationsData, totalDonations }) {
           <thead>
             <tr>
               <th style={{ width: '50px' }}>#</th>
-              <th>Donor Name / Reference</th>
-              <th style={{ textAlign: 'right' }}>Amount (₹)</th>
+              <th 
+                className="sortable-th"
+                onClick={() => setSortBy(prev => prev === 'name_asc' ? 'name_desc' : 'name_asc')}
+                title="Click to sort by Donor Name"
+              >
+                <div className="sort-th-content">
+                  <span>Donor Name / Reference</span>
+                  {sortBy === 'name_asc' && <ArrowUp size={14} className="sort-icon-active" />}
+                  {sortBy === 'name_desc' && <ArrowDown size={14} className="sort-icon-active" />}
+                  {sortBy !== 'name_asc' && sortBy !== 'name_desc' && <ArrowUpDown size={14} className="sort-icon-idle" />}
+                </div>
+              </th>
+              <th 
+                style={{ textAlign: 'right' }}
+                className="sortable-th"
+                onClick={() => setSortBy(prev => prev === 'amount_desc' ? 'amount_asc' : 'amount_desc')}
+                title="Click to sort by Amount"
+              >
+                <div className="sort-th-content right">
+                  <span>Amount (₹)</span>
+                  {sortBy === 'amount_desc' && <ArrowDown size={14} className="sort-icon-active" />}
+                  {sortBy === 'amount_asc' && <ArrowUp size={14} className="sort-icon-active" />}
+                  {sortBy !== 'amount_desc' && sortBy !== 'amount_asc' && <ArrowUpDown size={14} className="sort-icon-idle" />}
+                </div>
+              </th>
               <th style={{ textAlign: 'center' }}>Type</th>
               <th style={{ textAlign: 'center' }}>Status</th>
             </tr>

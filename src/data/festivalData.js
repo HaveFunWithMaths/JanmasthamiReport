@@ -530,7 +530,7 @@ export const festivalExpenses = [
     "id": "exp-2",
     "devotee": "Lokesh Prabhuji",
     "title": "Donna (Prasadam leaf cups/bowls)",
-    "category": "Prasadam and Bhoga",
+    "category": "Prasadam & Bhoga",
     "amount": 120.0,
     "comments": "Prasadam distribution donnas"
   },
@@ -538,7 +538,7 @@ export const festivalExpenses = [
     "id": "exp-3",
     "devotee": "Sitanatha prasad das",
     "title": "Grocery for 4 bhoga",
-    "category": "Prasadam and Bhoga",
+    "category": "Prasadam & Bhoga",
     "amount": 300.0,
     "comments": ""
   },
@@ -546,7 +546,7 @@ export const festivalExpenses = [
     "id": "exp-4",
     "devotee": "Surakhshitha Mataji",
     "title": "Deity dress material",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 1600.0,
     "comments": ""
   },
@@ -554,7 +554,7 @@ export const festivalExpenses = [
     "id": "exp-5",
     "devotee": "HG Svarup Radhika Mataji",
     "title": "Bhoga",
-    "category": "Prasadam and Bhoga",
+    "category": "Prasadam & Bhoga",
     "amount": 1900.0,
     "comments": ""
   },
@@ -570,7 +570,7 @@ export const festivalExpenses = [
     "id": "exp-7",
     "devotee": "Sai Dheeraj Prabhuji",
     "title": "Dinner prasadam",
-    "category": "Prasadam and Bhoga",
+    "category": "Prasadam & Bhoga",
     "amount": 13000.0,
     "comments": "Entire dinner cost - including grocery, sabji, gas, drinking water used for cooking"
   },
@@ -578,7 +578,7 @@ export const festivalExpenses = [
     "id": "exp-8",
     "devotee": "BrahmaLeela Mataji",
     "title": "Prabhupada dress cloth an\u0308d stritching",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 420.0,
     "comments": "2 meter \n2 dresses"
   },
@@ -610,7 +610,7 @@ export const festivalExpenses = [
     "id": "exp-12",
     "devotee": "Maheedhar Prabhuji",
     "title": "Grapes (Abhishekam purchase)",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 50.0,
     "comments": ""
   },
@@ -618,7 +618,7 @@ export const festivalExpenses = [
     "id": "exp-13",
     "devotee": "Maheedhar Prabhuji",
     "title": "Tender coconuts for Abhishekam",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 240.0,
     "comments": ""
   },
@@ -626,7 +626,7 @@ export const festivalExpenses = [
     "id": "exp-14",
     "devotee": "Maheedhar Prabhuji",
     "title": "Fruits for Abhishekam",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 453.0,
     "comments": ""
   },
@@ -634,7 +634,7 @@ export const festivalExpenses = [
     "id": "exp-15",
     "devotee": "Maheedhar Prabhuji",
     "title": "Apple and Sugar for Abhishekam",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 190.0,
     "comments": ""
   },
@@ -642,7 +642,7 @@ export const festivalExpenses = [
     "id": "exp-16",
     "devotee": "Maheedhar Prabhuji",
     "title": "Ghee + Honey for Abhishekam",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 690.0,
     "comments": ""
   },
@@ -650,7 +650,7 @@ export const festivalExpenses = [
     "id": "exp-17",
     "devotee": "Teja Siva Prabhuji",
     "title": "Flowers decorations",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 9000.0,
     "comments": "Flowers decoration for altar and entrance arch"
   },
@@ -658,7 +658,7 @@ export const festivalExpenses = [
     "id": "exp-18",
     "devotee": "HG Sitanath Prasad  Prabhuji",
     "title": "56 bhoga items",
-    "category": "Prasadam and Bhoga",
+    "category": "Prasadam & Bhoga",
     "amount": 300.0,
     "comments": ""
   },
@@ -698,7 +698,7 @@ export const festivalExpenses = [
     "id": "exp-23",
     "devotee": "HG Sudama Sakha Prabhuji",
     "title": "Flowers purchasing",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 2775.0,
     "comments": ""
   },
@@ -714,7 +714,7 @@ export const festivalExpenses = [
     "id": "exp-25",
     "devotee": "Sreenivas Prabhuji",
     "title": "Dinner Prasadam Transportation Porter charges",
-    "category": "Prasadam and Bhoga",
+    "category": "Prasadam & Bhoga",
     "amount": 160.0,
     "comments": ""
   },
@@ -722,7 +722,7 @@ export const festivalExpenses = [
     "id": "exp-26",
     "devotee": "Sreenivas Prabhuji",
     "title": "Prasadam Plates, drones, spoons",
-    "category": "Prasadam and Bhoga",
+    "category": "Prasadam & Bhoga",
     "amount": 1190.0,
     "comments": "10 Drones packets  - 250\n360 Plates  - 800\n200 Spoons - 140"
   },
@@ -746,7 +746,7 @@ export const festivalExpenses = [
     "id": "exp-29",
     "devotee": "Maheedhar Prabhuji",
     "title": "Brass Tray + Conch for Abhishekam",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 7350.0,
     "comments": ""
   },
@@ -762,7 +762,7 @@ export const festivalExpenses = [
     "id": "exp-31",
     "devotee": "Mukesh Prabhuji",
     "title": "Milk 4l",
-    "category": "Deity (Abhishekam, flowers)",
+    "category": "Diety",
     "amount": 424.0,
     "comments": ""
   },
@@ -779,7 +779,7 @@ export const festivalExpenses = [
     "devotee": "Lokesh Prabhuji",
     "title": "Photo frames for gifts",
     "category": "Gifts",
-    "amount": 5800.0,
+    "amount": 3000.0,
     "comments": ""
   },
   {
@@ -826,14 +826,14 @@ export const expenseCategories = [
   },
   {
     id: "deity",
-    name: "Deity (Abhishekam, flowers)",
+    name: "Diety",
     description: "Deity dresses, altar & entrance floral decorations, sacred conch & abhishekam ingredients",
     color: "#ec4899",
     icon: "Flower2"
   },
   {
     id: "prasadam",
-    name: "Prasadam and Bhoga",
+    name: "Prasadam & Bhoga",
     description: "Dinner feast prasadam, 56 bhoga offerings, eco plates, spoons & porterage",
     color: "#10b981",
     icon: "Utensils"

@@ -6,15 +6,15 @@ A high-fidelity, devotional, and transparent web application presenting the comp
 - **Total Inflow (Receipts)**: ₹1,87,082 (87 contributions)
 - **Total Abhishekam Sevas**: ₹1,58,553 (66 devotees across 4 Seva categories)
 - **Total General Donations & Hundi**: ₹28,529 (21 donors/records)
-- **Total Festival Expenses**: ₹1,06,300 (37 line items across 6 categories)
-- **Net Surplus Balance**: +₹80,782 (43.2% preserved in temple reserves)
+- **Total Festival Expenses**: ₹1,03,500 (37 line items across 6 categories)
+- **Net Surplus Balance**: +₹83,582 (44.7% preserved in temple reserves)
 
 ## 📂 Expense Categories
-1. **Setup**: ₹46,155 (43.4%)
-2. **Deity (Abhishekam, flowers)**: ₹23,192 (21.8%)
-3. **Prasadam and Bhoga**: ₹17,100 (16.1%)
-4. **Gifts**: ₹11,569 (10.9%)
-5. **Printing (Posters and invite)**: ₹6,740 (6.3%)
+1. **Setup**: ₹46,155 (44.6%)
+2. **Diety**: ₹23,192 (22.4%)
+3. **Prasadam & Bhoga**: ₹16,970 (16.4%)
+4. **Gifts**: ₹8,769 (8.5%)
+5. **Printing (Posters and invite)**: ₹6,870 (6.6%)
 6. **Others**: ₹1,544 (1.5%)
 
 ## 🚀 Local Development
