@@ -3,11 +3,11 @@ import { Receipt, Flame, HeartHandshake, Users, PieChart } from 'lucide-react';
 
 export default function TabNavigation({ activeTab, setActiveTab, counts }) {
   const tabs = [
+    { id: 'summary', label: 'Audit Summary', icon: PieChart, count: null },
     { id: 'expenses', label: 'Expenses Breakdown', icon: Receipt, count: counts.expenses },
     { id: 'abhishekam', label: 'Abhishekam Sevas', icon: Flame, count: counts.abhishekam },
     { id: 'donations', label: 'Donations & Hundi', icon: HeartHandshake, count: counts.donations },
     { id: 'devotees', label: 'Devotee Ledger', icon: Users, count: counts.devotees },
-    { id: 'summary', label: 'Audit Summary', icon: PieChart, count: null },
   ];
 
   return (

@@ -22,9 +22,26 @@ const colorMap = {
   "Others": "#94a3b8"
 };
 
-export default function ExpensesSection({ expenses, categories, totalExpenses }) {
-  const [selectedCategory, setSelectedCategory] = useState('ALL');
+export default function ExpensesSection({ 
+  expenses, 
+  categories, 
+  totalExpenses,
+  selectedCategory = 'ALL',
+  setSelectedCategory = () => {}
+}) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('category'); // 'category' is default as requested!
+  const [sortAsc, setSortAsc] = useState(true);
+
+  // Category canonical order
+  const categoryOrder = [
+    "Setup (Generator)",
+    "Deity (Abhishekam, flowers)",
+    "Prasadam and Bhoga",
+    "Gifts",
+    "Printing (Posters and invite)",
+    "Others"
+  ];
 
   // Calculate totals per category
   const categoryStats = useMemo(() => {
@@ -39,9 +56,9 @@ export default function ExpensesSection({ expenses, categories, totalExpenses })
     return stats;
   }, [expenses]);
 
-  // Filter expenses
+  // Filter and sort expenses - sorted by Category by default!
   const filteredExpenses = useMemo(() => {
-    return expenses.filter(item => {
+    const filtered = expenses.filter(item => {
       const matchesCategory = selectedCategory === 'ALL' || item.category === selectedCategory;
       const q = searchQuery.toLowerCase();
       const matchesSearch = 
@@ -51,7 +68,23 @@ export default function ExpensesSection({ expenses, categories, totalExpenses })
         (item.comments && item.comments.toLowerCase().includes(q));
       return matchesCategory && matchesSearch;
     });
-  }, [expenses, selectedCategory, searchQuery]);
+
+    return [...filtered].sort((a, b) => {
+      if (sortBy === 'category') {
+        const catCompare = a.category.localeCompare(b.category);
+        if (catCompare !== 0) return sortAsc ? catCompare : -catCompare;
+        // Secondary sort by amount descending within the same category
+        return b.amount - a.amount;
+      }
+      if (sortBy === 'amount') {
+        return sortAsc ? a.amount - b.amount : b.amount - a.amount;
+      }
+      if (sortBy === 'devotee') {
+        return sortAsc ? a.devotee.localeCompare(b.devotee) : b.devotee.localeCompare(a.devotee);
+      }
+      return 0;
+    });
+  }, [expenses, selectedCategory, searchQuery, sortBy, sortAsc]);
 
   const currentFilteredTotal = filteredExpenses.reduce((acc, curr) => acc + curr.amount, 0);
 
@@ -158,10 +191,42 @@ export default function ExpensesSection({ expenses, categories, totalExpenses })
           <thead>
             <tr>
               <th style={{ width: '45px' }}>#</th>
-              <th>Devotee / Submitter</th>
+              <th 
+                style={{ cursor: 'pointer', userSelect: 'none' }}
+                onClick={() => {
+                  if (sortBy === 'devotee') setSortAsc(!sortAsc);
+                  else { setSortBy('devotee'); setSortAsc(true); }
+                }}
+                title="Click to sort by Devotee"
+              >
+                Devotee / Submitter {sortBy === 'devotee' ? (sortAsc ? '▲' : '▼') : ''}
+              </th>
               <th>Title / Item Description</th>
-              <th>Category</th>
-              <th style={{ textAlign: 'right' }}>Amount (₹)</th>
+              <th 
+                style={{ cursor: 'pointer', userSelect: 'none', color: sortBy === 'category' ? 'var(--gold-light)' : undefined }}
+                onClick={() => {
+                  if (sortBy === 'category') setSortAsc(!sortAsc);
+                  else { setSortBy('category'); setSortAsc(true); }
+                }}
+                title="Click to sort by Category"
+              >
+                Category {sortBy === 'category' ? (sortAsc ? '▲' : '▼') : ''}
+                {sortBy === 'category' && (
+                  <span style={{ fontSize: '0.65rem', marginLeft: '6px', opacity: 0.8, textTransform: 'none' }}>
+                    (Default)
+                  </span>
+                )}
+              </th>
+              <th 
+                style={{ textAlign: 'right', cursor: 'pointer', userSelect: 'none' }}
+                onClick={() => {
+                  if (sortBy === 'amount') setSortAsc(!sortAsc);
+                  else { setSortBy('amount'); setSortAsc(false); }
+                }}
+                title="Click to sort by Amount"
+              >
+                Amount (₹) {sortBy === 'amount' ? (sortAsc ? '▲' : '▼') : ''}
+              </th>
               <th>Notes / Remarks</th>
             </tr>
           </thead>

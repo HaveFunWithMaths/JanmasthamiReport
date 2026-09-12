@@ -18,7 +18,9 @@ import {
 } from './data/festivalData';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('expenses');
+  // Audit Summary is the first and default tab as requested!
+  const [activeTab, setActiveTab] = useState('summary');
+  const [selectedExpenseCategory, setSelectedExpenseCategory] = useState('ALL');
 
   // Compute Core Financial Figures
   const totalAbhishekam = useMemo(() => {
@@ -46,6 +48,19 @@ export default function App() {
     const devs = new Set(festivalExpenses.map(e => e.devotee));
     return devs.size;
   }, []);
+
+  // Intuitive redirect handler from Audit Summary to Expenses tab
+  const handleNavigateToExpenses = (category = 'ALL') => {
+    setSelectedExpenseCategory(category);
+    setActiveTab('expenses');
+    // Smooth scroll down to the navigation bar / expenses content
+    setTimeout(() => {
+      const el = document.getElementById('expenses-section') || document.querySelector('.tabs-nav');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 50);
+  };
 
   return (
     <div className="app-root">
@@ -91,11 +106,24 @@ export default function App() {
 
         {/* Tab Content Display */}
         <div className="tab-content-area">
+          {activeTab === 'summary' && (
+            <AuditSummary 
+              totalInflow={totalInflow}
+              totalExpenses={totalExpenses}
+              netSurplus={netSurplus}
+              totalAbhishekam={totalAbhishekam}
+              totalDonations={totalDonations}
+              onNavigateToExpenses={handleNavigateToExpenses}
+            />
+          )}
+
           {activeTab === 'expenses' && (
             <ExpensesSection 
               expenses={festivalExpenses}
               categories={expenseCategories}
               totalExpenses={totalExpenses}
+              selectedCategory={selectedExpenseCategory}
+              setSelectedCategory={setSelectedExpenseCategory}
             />
           )}
 
@@ -117,16 +145,6 @@ export default function App() {
             <DevoteeLedger 
               expenses={festivalExpenses}
               totalExpenses={totalExpenses}
-            />
-          )}
-
-          {activeTab === 'summary' && (
-            <AuditSummary 
-              totalInflow={totalInflow}
-              totalExpenses={totalExpenses}
-              netSurplus={netSurplus}
-              totalAbhishekam={totalAbhishekam}
-              totalDonations={totalDonations}
             />
           )}
         </div>
