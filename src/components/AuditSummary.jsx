@@ -1,66 +1,42 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { 
   CheckCircle2, AlertCircle, PieChart, ShieldCheck, Heart, 
   Sparkles, Award, Utensils, Tent, Flower2, Gift, Printer, 
   ArrowRight, ArrowUpRight, Receipt, ChevronRight
 } from 'lucide-react';
 
-const categoryDetails = [
-  {
-    name: "Setup (Generator)",
-    amount: 46155,
-    count: 6,
-    pct: 43.4,
+const categoryMeta = {
+  "Setup (Generator)": {
     color: "#f59e0b",
     icon: Tent,
     desc: "Tent, generator, lighting, fans, barricades & seating"
   },
-  {
-    name: "Deity (Abhishekam, flowers)",
-    amount: 23192,
-    count: 11,
-    pct: 21.8,
+  "Deity (Abhishekam, flowers)": {
     color: "#ec4899",
     icon: Flower2,
     desc: "Altar & arch flowers, conch, brass tray, dresses, milk & fruits"
   },
-  {
-    name: "Prasadam and Bhoga",
-    amount: 17100,
-    count: 7,
-    pct: 16.1,
+  "Prasadam and Bhoga": {
     color: "#10b981",
     icon: Utensils,
     desc: "Dinner feast, 56 bhoga, eco plates, spoons, donnas & transport"
   },
-  {
-    name: "Gifts",
-    amount: 11569,
-    count: 4,
-    pct: 10.9,
+  "Gifts": {
     color: "#8b5cf6",
     icon: Gift,
     desc: "Honored guest frames, children storybooks & gift wraps"
   },
-  {
-    name: "Printing (Posters and invite)",
-    amount: 6740,
-    count: 7,
-    pct: 6.3,
+  "Printing (Posters and invite)": {
     color: "#3b82f6",
     icon: Printer,
     desc: "Invitations, banners, impact cards, frame prints & passes"
   },
-  {
-    name: "Others",
-    amount: 1544,
-    count: 2,
-    pct: 1.5,
+  "Others": {
     color: "#94a3b8",
     icon: ShieldCheck,
     desc: "Festival security guard (₹1,000) & volunteer service badges"
   }
-];
+};
 
 export default function AuditSummary({ 
   totalInflow, 
@@ -68,11 +44,41 @@ export default function AuditSummary({
   netSurplus, 
   totalAbhishekam, 
   totalDonations,
+  expenses = [],
   onNavigateToExpenses = () => {} 
 }) {
   const surplusPct = ((netSurplus / totalInflow) * 100).toFixed(1);
   const abhishekamInflowPct = ((totalAbhishekam / totalInflow) * 100).toFixed(1);
   const donationsInflowPct = ((totalDonations / totalInflow) * 100).toFixed(1);
+
+  const categoryDetails = useMemo(() => {
+    const stats = {};
+    expenses.forEach(item => {
+      if (!stats[item.category]) {
+        stats[item.category] = { amount: 0, count: 0 };
+      }
+      stats[item.category].amount += item.amount;
+      stats[item.category].count += 1;
+    });
+
+    const list = Object.keys(categoryMeta).map(catName => {
+      const meta = categoryMeta[catName];
+      const amount = stats[catName]?.amount || 0;
+      const count = stats[catName]?.count || 0;
+      const pct = totalExpenses > 0 ? ((amount / totalExpenses) * 100).toFixed(1) : '0.0';
+      return {
+        name: catName,
+        amount,
+        count,
+        pct,
+        color: meta.color,
+        icon: meta.icon,
+        desc: meta.desc
+      };
+    });
+
+    return list.sort((a, b) => b.amount - a.amount);
+  }, [expenses, totalExpenses]);
 
   return (
     <section id="audit-summary-section">

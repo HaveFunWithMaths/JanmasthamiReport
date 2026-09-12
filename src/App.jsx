@@ -113,6 +113,7 @@ export default function App() {
               netSurplus={netSurplus}
               totalAbhishekam={totalAbhishekam}
               totalDonations={totalDonations}
+              expenses={festivalExpenses}
               onNavigateToExpenses={handleNavigateToExpenses}
             />
           )}

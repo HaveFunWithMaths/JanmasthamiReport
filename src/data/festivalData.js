@@ -523,7 +523,7 @@ export const festivalExpenses = [
     "devotee": "Lokesh Prabhuji",
     "title": "Festival Banners printing",
     "category": "Printing (Posters and invite)",
-    "amount": 670.0,
+    "amount": 800.0,
     "comments": "Festival banners printing"
   },
   {
@@ -531,7 +531,7 @@ export const festivalExpenses = [
     "devotee": "Lokesh Prabhuji",
     "title": "Donna (Prasadam leaf cups/bowls)",
     "category": "Prasadam and Bhoga",
-    "amount": 250.0,
+    "amount": 120.0,
     "comments": "Prasadam distribution donnas"
   },
   {
