@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Flame, HeartHandshake, Coins, Sparkles, Filter } from 'lucide-react';
+import { Search, Flame, HeartHandshake, Coins, Sparkles, Filter, ArrowUpDown, ArrowDown, ArrowUp } from 'lucide-react';
 
 export default function DonationsAndAbhishekam({ 
   abhishekamData = [], 
@@ -12,11 +12,20 @@ export default function DonationsAndAbhishekam({
   const [viewFilter, setViewFilter] = useState('ALL');
   const [selectedSeva, setSelectedSeva] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Sorting: 'amount_desc' (Default: Highest amount first) | 'amount_asc' | 'name_asc'
+  const [sortBy, setSortBy] = useState('amount_desc');
 
-  // Extract unique seva types from Abhishekam data
+  // Extract unique seva types from Abhishekam data, sorted by highest seva tier amount descending
   const sevaTypes = useMemo(() => {
-    const set = new Set(abhishekamData.map(item => item.seva || 'Gotra Nama'));
-    return Array.from(set);
+    const stats = {};
+    abhishekamData.forEach(item => {
+      const s = item.seva || 'Gotra Nama';
+      if (!stats[s]) stats[s] = { count: 0, maxAmount: 0 };
+      stats[s].count += 1;
+      if (item.amount > stats[s].maxAmount) stats[s].maxAmount = item.amount;
+    });
+    return Object.keys(stats).sort((a, b) => stats[b].maxAmount - stats[a].maxAmount);
   }, [abhishekamData]);
 
   // Combine datasets with clear discriminator
@@ -55,7 +64,7 @@ export default function DonationsAndAbhishekam({
 
   // Filter combined list based on active tab, sub-category, and search query
   const filteredList = useMemo(() => {
-    return combinedList.filter(item => {
+    const filtered = combinedList.filter(item => {
       // Main view filter
       if (viewFilter === 'ABHISHEKAM' && item.type !== 'Abhishekam') return false;
       if (viewFilter === 'DONATIONS' && item.type !== 'Donation' && item.type !== 'Hundi') return false;
@@ -77,11 +86,33 @@ export default function DonationsAndAbhishekam({
 
       return true;
     });
-  }, [combinedList, viewFilter, selectedSeva, searchQuery]);
+
+    // Sort by requested order (default: descending by amount)
+    return filtered.sort((a, b) => {
+      if (sortBy === 'amount_desc') {
+        return b.amount - a.amount || a.name.localeCompare(b.name);
+      }
+      if (sortBy === 'amount_asc') {
+        return a.amount - b.amount || a.name.localeCompare(b.name);
+      }
+      if (sortBy === 'name_asc') {
+        return a.name.localeCompare(b.name);
+      }
+      return b.amount - a.amount;
+    });
+  }, [combinedList, viewFilter, selectedSeva, searchQuery, sortBy]);
 
   const filteredTotal = useMemo(() => {
     return filteredList.reduce((acc, curr) => acc + curr.amount, 0);
   }, [filteredList]);
+
+  const toggleAmountSort = () => {
+    setSortBy(prev => prev === 'amount_desc' ? 'amount_asc' : 'amount_desc');
+  };
+
+  const toggleNameSort = () => {
+    setSortBy(prev => prev === 'name_asc' ? 'amount_desc' : 'name_asc');
+  };
 
   return (
     <section id="donations-abhishekam-section">
@@ -91,7 +122,7 @@ export default function DonationsAndAbhishekam({
           Donations & Abhishekam Sevas
         </h3>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-          Consolidated record of all sacred Abhishekam sponsorships and general festival donations. Total Inflow: <strong>₹{totalInflow.toLocaleString('en-IN')}</strong> ({combinedList.length} offerings).
+          Consolidated record of all sacred Abhishekam sponsorships and general festival donations, arranged in descending order of offering amount. Total Inflow: <strong>₹{totalInflow.toLocaleString('en-IN')}</strong> ({combinedList.length} offerings).
         </p>
       </div>
 
@@ -211,9 +242,9 @@ export default function DonationsAndAbhishekam({
         </div>
       )}
 
-      {/* Search Toolbar */}
-      <div className="search-filter-bar">
-        <div className="search-input-wrapper">
+      {/* Search Toolbar & Sort Controls */}
+      <div className="search-filter-bar" style={{ flexWrap: 'wrap', gap: '0.85rem' }}>
+        <div className="search-input-wrapper" style={{ flex: '1 1 280px' }}>
           <Search size={18} className="search-icon" />
           <input
             type="text"
@@ -225,7 +256,25 @@ export default function DonationsAndAbhishekam({
           />
         </div>
 
-        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+        {/* Sort Selector */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+            Sort:
+          </span>
+          <select 
+            className="search-input" 
+            style={{ padding: '0.4rem 0.75rem', fontSize: '0.82rem', width: 'auto', cursor: 'pointer' }}
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            id="inflow-sort-select"
+          >
+            <option value="amount_desc">Amount (Highest First) ▼</option>
+            <option value="amount_asc">Amount (Lowest First) ▲</option>
+            <option value="name_asc">Devotee Name (A-Z)</option>
+          </select>
+        </div>
+
+        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
           Showing <strong>{filteredList.length}</strong> records • Subtotal: <strong className="font-num" style={{ color: 'var(--gold-light)' }}>₹{filteredTotal.toLocaleString('en-IN')}</strong>
         </div>
       </div>
@@ -236,10 +285,30 @@ export default function DonationsAndAbhishekam({
           <thead>
             <tr>
               <th style={{ width: '50px' }}>#</th>
-              <th>Devotee / Donor Name</th>
+              <th 
+                style={{ cursor: 'pointer', userSelect: 'none' }} 
+                onClick={toggleNameSort}
+                title="Click to sort by Name"
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                  <span>Devotee / Donor Name</span>
+                  {sortBy === 'name_asc' && <ArrowUp size={14} color="var(--gold-light)" />}
+                </div>
+              </th>
               <th>Type</th>
               <th>Seva / Offering Details</th>
-              <th style={{ textAlign: 'right' }}>Amount (₹)</th>
+              <th 
+                style={{ textAlign: 'right', cursor: 'pointer', userSelect: 'none' }}
+                onClick={toggleAmountSort}
+                title="Click to toggle Amount sort"
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.35rem' }}>
+                  <span>Amount (₹)</span>
+                  {sortBy === 'amount_desc' && <ArrowDown size={14} color="var(--gold-light)" />}
+                  {sortBy === 'amount_asc' && <ArrowUp size={14} color="var(--gold-light)" />}
+                  {sortBy !== 'amount_desc' && sortBy !== 'amount_asc' && <ArrowUpDown size={14} color="var(--text-subtle)" />}
+                </div>
+              </th>
               <th style={{ textAlign: 'center' }}>Status</th>
             </tr>
           </thead>
