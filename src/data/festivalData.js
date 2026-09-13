@@ -744,14 +744,6 @@ export const festivalExpenses = [
   },
   {
     "id": "exp-29",
-    "devotee": "Maheedhar Prabhuji",
-    "title": "Brass Tray + Conch for Abhishekam",
-    "category": "Diety",
-    "amount": 7350.0,
-    "comments": ""
-  },
-  {
-    "id": "exp-30",
     "devotee": "Manisha Mataji",
     "title": "Gifts boxes , gift wraps ,boora powder",
     "category": "Gifts",
@@ -759,7 +751,7 @@ export const festivalExpenses = [
     "comments": "Bhoga boxes ( gift boxes ) - cost 250 \nI did not take bill from shop prji"
   },
   {
-    "id": "exp-31",
+    "id": "exp-30",
     "devotee": "Mukesh Prabhuji",
     "title": "Milk 4l",
     "category": "Diety",
@@ -767,7 +759,7 @@ export const festivalExpenses = [
     "comments": ""
   },
   {
-    "id": "exp-32",
+    "id": "exp-31",
     "devotee": "Lokesh Prabhuji",
     "title": "Print outs for photo frames for gifts, prasadam coupons, volunteer badge coupons prints",
     "category": "Printing (Posters and invite)",
@@ -775,7 +767,7 @@ export const festivalExpenses = [
     "comments": ""
   },
   {
-    "id": "exp-33",
+    "id": "exp-32",
     "devotee": "Lokesh Prabhuji",
     "title": "Photo frames for gifts",
     "category": "Gifts",
@@ -783,7 +775,7 @@ export const festivalExpenses = [
     "comments": ""
   },
   {
-    "id": "exp-34",
+    "id": "exp-33",
     "devotee": "Lokesh Prabhuji",
     "title": "Printing Influential people leaflet invitation",
     "category": "Printing (Posters and invite)",
@@ -791,7 +783,7 @@ export const festivalExpenses = [
     "comments": "A3 size color printout cards for influential people invitation: each card Rs. 80, printed 15 cards"
   },
   {
-    "id": "exp-35",
+    "id": "exp-34",
     "devotee": "Lokesh Prabhuji",
     "title": "A4 cards printing",
     "category": "Printing (Posters and invite)",
@@ -799,7 +791,7 @@ export const festivalExpenses = [
     "comments": "Last 1.5 yrs Impact of services by GNH"
   },
   {
-    "id": "exp-36",
+    "id": "exp-35",
     "devotee": "Lokesh Prabhuji",
     "title": "Print Invitation for Janmastami",
     "category": "Printing (Posters and invite)",
@@ -807,7 +799,7 @@ export const festivalExpenses = [
     "comments": ""
   },
   {
-    "id": "exp-37",
+    "id": "exp-36",
     "devotee": "Lokesh Prabhuji",
     "title": "Printing passes for Janmastami",
     "category": "Printing (Posters and invite)",

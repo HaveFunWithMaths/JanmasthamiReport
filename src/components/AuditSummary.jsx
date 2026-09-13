@@ -93,7 +93,7 @@ export default function AuditSummary({
           title="Jump directly to itemized expenses"
         >
           <Receipt size={16} />
-          <span>View All 37 Expense Items</span>
+          <span>View All {expenses.length} Expense Items</span>
           <ArrowRight size={16} />
         </button>
       </div>
@@ -155,7 +155,7 @@ export default function AuditSummary({
             ₹{totalExpenses.toLocaleString('en-IN')}
           </div>
           <div style={{ fontSize: '0.825rem', color: 'var(--text-subtle)' }}>
-            37 Expense Line Items across 6 Categories
+            {expenses.length} Expense Line Items across 6 Categories
           </div>
         </div>
 
@@ -303,7 +303,7 @@ export default function AuditSummary({
             Ready to inspect the complete itemized records?
           </h4>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-            View all 37 expenditures, devotee receipts, descriptions, and audit remarks sorted by Category.
+            View all {expenses.length} expenditures, devotee receipts, descriptions, and audit remarks sorted by Category.
           </p>
         </div>
 

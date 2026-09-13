@@ -1,7 +1,7 @@
 import React from 'react';
 import { IndianRupee, HeartHandshake, Flame, TrendingUp, PiggyBank } from 'lucide-react';
 
-export default function KPICards({ totalAbhishekam, totalDonations, totalExpenses, totalInflow, netSurplus }) {
+export default function KPICards({ totalAbhishekam, totalDonations, totalExpenses, totalExpenseItems = 36, totalInflow, netSurplus }) {
   return (
     <section id="kpi-overview-section">
       <div className="hero-banner" style={{ padding: '2rem 0 1.25rem' }}>
@@ -74,7 +74,7 @@ export default function KPICards({ totalAbhishekam, totalDonations, totalExpense
             ₹{totalExpenses.toLocaleString('en-IN')}
           </div>
           <div className="kpi-subtext">
-            <span>37 Items across 6 Categories</span>
+            <span>{totalExpenseItems} Items across 6 Categories</span>
           </div>
         </div>
 

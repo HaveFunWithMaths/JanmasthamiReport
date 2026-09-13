@@ -76,6 +76,7 @@ export default function App() {
           totalAbhishekam={totalAbhishekam}
           totalDonations={totalDonations}
           totalExpenses={totalExpenses}
+          totalExpenseItems={festivalExpenses.length}
           totalInflow={totalInflow}
           netSurplus={netSurplus}
         />

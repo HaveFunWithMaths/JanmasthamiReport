@@ -332,7 +332,7 @@ export default function ExpensesSection({
             <option value="devotee_desc">Devotee Name (Z to A)</option>
             <option value="title_asc">Item Description (A to Z)</option>
             <option value="title_desc">Item Description (Z to A)</option>
-            <option value="id_asc">Default Order (# 1 to 37)</option>
+            <option value="id_asc">Default Order (# 1 to {expenses.length})</option>
           </select>
         </div>
 
